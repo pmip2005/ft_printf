@@ -18,6 +18,9 @@
 # include <stdarg.h>
 # include <stddef.h>
 
+# define HEX "0123456789ABCDEF"
+
+char	*ft_strtoupper(char *s);
 char	*ft_itoa(int n);
 char	*ft_itoa_unsigned(unsigned int n);
 char	*ft_strdup(const char *src);
@@ -25,7 +28,7 @@ int		ft_putchar(char c);
 int		ft_putstr(char *s);
 int		ft_putnbr(int n);
 int		ft_putnbr_unsigned(unsigned int n);
-int		ft_puthex(unsigned int n, char format);
+int		ft_puthex(unsigned long long n, char format);
 int		ft_putptr(void *ptr);
 int		ft_printf(const char *format, ...);
 int		ft_select_method(va_list *args, char specifier);
