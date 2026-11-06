@@ -10,45 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
-#include <stdarg.h>
-#include <unistd.h>
-
-static int	ft_putchar(int c)
-{
-	return (write(1, &c, 1));
-}
-
-static int	ft_putstr(char *s)
-{
-	int	count;
-
-	if (!s)
-		return (write(1, "(null)", 6));
-	count = 0;
-	while (*s)
-	{
-		count += ft_putchar(*s);
-		s++;
-	}
-	return (count);
-}
-
-static int	ft_putnbr(int n)
-{
-	int		i;
-	char	*s;
-
-	s = ft_itoa(n);
-	i = 0;
-	if (!s)
-		return ;
-	while (s[i])
-	{
-		ft_putchar(s[i]);
-		i++;
-	}
-	return (i);
-}
 
 int	ft_printf(const char *format, ...)
 {
@@ -59,23 +20,10 @@ int	ft_printf(const char *format, ...)
 	va_start(args, format);
 	while (*format)
 	{
-		if (*format == '%')
+		if (*format == '%' && *(format + 1))
 		{
+			count += ft_select_method(&args, *(format + 1));
 			format++;
-			if (*format == 'c')
-				count += ft_putchar(va_arg(args, int));
-			else if (*format == 's')
-				count += ft_putstr(va_arg(args, char *));
-			else if (*format == 'd' || *format == 'i')
-				count += ft_putnbr(va_arg(args, int));
-			else if (*format == 'u')
-				count += ft_putnbr_unsigned(va_arg(args, unsigned int));
-			else if (*format == 'x' || *format == 'X')
-				count += ft_puthex(va_arg(args, unsigned int), *format);
-			else if (*format == 'p')
-				count += ft_putptr(va_arg(args, void *));
-			else if (*format == '%')
-				count += write(1, "%", 1);
 		}
 		else
 		{
@@ -85,4 +33,23 @@ int	ft_printf(const char *format, ...)
 	}
 	va_end(args);
 	return (count);
+}
+
+int	ft_select_method(va_list *args, char specifier)
+{
+	if (specifier == 'c')
+		return (ft_putchar(va_arg(*args, int)));
+	else if (specifier == 's')
+		return (ft_putstr(va_arg(*args, char *)));
+	else if (specifier == 'd' || specifier == 'i')
+		return (ft_putnbr(va_arg(*args, int)));
+	else if (specifier == 'u')
+		return (ft_putnbr_unsigned(va_arg(*args, unsigned int)));
+	else if (specifier == 'x' || specifier == 'X')
+		return (ft_puthex(va_arg(*args, unsigned int), specifier));
+	else if (specifier == 'p')
+		return (ft_putptr(va_arg(*args, void *)));
+	else if (specifier == '%')
+		return (ft_putchar('%'));
+	return (0);
 }

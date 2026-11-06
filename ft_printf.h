@@ -1,18 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Code\Test\ft_printf\ft_printf.h:+:                          :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ppoco <marvin.42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026-11-03 00:41:09 by ppoco             #+#    #+#             */
-/*   Updated: 2026-11-03 00:41:09 by ppoco            ###   ########.fr       */
+/*   Created: 2026-11-05 12:30:17 by ppoco             #+#    #+#             */
+/*   Updated: 2026-11-05 12:30:17 by ppoco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-int	ft_printf(const char *format, ...);
+# include <stdlib.h>
+# include <unistd.h>
+# include <stdarg.h>
+# include <stddef.h>
+
+char	*ft_itoa(int n);
+char	*ft_itoa_unsigned(unsigned int n);
+char	*ft_strdup(const char *src);
+int		ft_putchar(char c);
+int		ft_putstr(char *s);
+int		ft_putnbr(int n);
+int		ft_putnbr_unsigned(unsigned int n);
+int		ft_puthex(unsigned int n, char format);
+int		ft_putptr(void *ptr);
+int		ft_printf(const char *format, ...);
+int		ft_select_method(va_list *args, char specifier);
 
 #endif
