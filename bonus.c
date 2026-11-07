@@ -1,34 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strtoupper.c                                    :+:      :+:    :+:   */
+/*   c:\Users\crazy\Documents\Code\Test\ft_printf\bonus.c:+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ppoco <marvin.42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026-11-06 17:02:31 by ppoco             #+#    #+#             */
-/*   Updated: 2026-11-06 17:02:31 by ppoco            ###   ########.fr       */
+/*   Created: 2026-11-07 02:08:50 by ppoco             #+#    #+#             */
+/*   Updated: 2026-11-07 02:08:50 by ppoco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
-
-char	*ft_strtoupper(char *s)
+int	ft_printf(const char *s, ...)
 {
-	int	i;
+	va_list		args;
+	t_format	format;
+	int			count;
 
-	i = 0;
-	while (s[i])
+	count = 0;
+	va_start(args, s);
+	while (*s)
 	{
-		if (s[i] >= 'a' && s[i] <= 'z')
-			s[i] -= 32;
-		i++;
+		if (*s == '%')
+		{
+			s++;
+			s = ft_parse_format(s, &format);
+			count += ft_print_format(&args, &format);
+		}
+		else
+			count += ft_putchar(*s++);
 	}
-	return (s);
+	va_end(args);
+	return (count);
 }
-
-// int main(void)
-// {
-// 	printf("%c\n", ft_toupper('a'));
-// 	return (0);
-// }
-// cc -Wall -Wextra -Werror -include stdio.h *.c -o test && ./test

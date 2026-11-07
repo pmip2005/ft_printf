@@ -28,7 +28,7 @@ int	ft_puthex(unsigned long long n, char specifier)
 	int		count;
 	int		i;
 
-	digits = "0123456789abcdef";
+	digits = HEX_LOW;
 	if (specifier == 'X')
 		digits = HEX;
 	i = 0;

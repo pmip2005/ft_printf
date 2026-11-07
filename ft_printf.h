@@ -19,6 +19,20 @@
 # include <stddef.h>
 
 # define HEX "0123456789ABCDEF"
+# define HEX_LOW "0123456789abcdef"
+
+typedef struct s_format
+{
+	int		left_align;
+	int		zero_pad;
+	int		plus_sign;
+	int		space_sign;
+	int		alternate;
+	int		width;
+	int		precision;
+	int		has_precision;
+	char	specifier;
+}	t_format;
 
 char	*ft_strtoupper(char *s);
 char	*ft_itoa(int n);
