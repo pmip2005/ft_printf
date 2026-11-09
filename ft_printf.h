@@ -29,8 +29,6 @@ typedef struct s_format
 	int		space_sign;
 	int		alternate;
 	int		width;
-	int		precision;
-	int		has_precision;
 	char	specifier;
 }	t_format;
 

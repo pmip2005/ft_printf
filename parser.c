@@ -18,8 +18,6 @@ void	ft_init_format(t_format *format)
 	format->space_sign = 0;
 	format->alternate = 0;
 	format->width = 0;
-	format->precision = 0;
-	format->has_precision = 0;
 	format->specifier = '\0';
 }
 
@@ -39,6 +37,10 @@ static const char	*ft_parse_flags(const char *s, t_format *format)
 			format->alternate = 1;
 		s++;
 	}
+	if (format->left_align)
+		format->zero_pad = 0;
+	if (format->plus_sign)
+		format->space_sign = 0;
 	return (s);
 }
 
@@ -52,28 +54,15 @@ static const char	*ft_parse_width(const char *s, t_format *format)
 	return (s);
 }
 
-static const char	*ft_parse_precision(const char *s, t_format *format)
-{
-	if (*s != '.')
-		return (s);
-	format->has_precision = 1;
-	s++;
-	while (*s >= '0' && *s <= '9')
-	{
-		format->precision = format->precision * 10 + (*s - '0');
-		s++;
-	}
-	return (s);
-}
-
 const char	*ft_parse_format(const char *s, t_format *format)
 {
 	ft_init_format(format);
 	s = ft_parse_flags(s, format);
 	s = ft_parse_width(s, format);
-	s = ft_parse_precision(s, format);
 	format->specifier = *s;
 	if (*s)
 		s++;
 	return (s);
 }
+
+
